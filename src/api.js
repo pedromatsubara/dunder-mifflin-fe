@@ -21,6 +21,11 @@ export const getEmployeeById = async (id) => {
   return response.data;
 };
 
+export const createEmployee = async (employee) => {
+  const response = await api.post(`/employees/`, employee);
+  return response.data;
+};
+
 export const deleteEmployee = async (id) => {
   const response = await api.delete(`/employees/${id}`);
   return response.data;
