@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getDepartments, getEmployeeById, getImageUrl } from "../api";
+import { getDate, getDateDifference } from "../utils";
 import {
   Avatar,
   Box,
@@ -100,7 +101,10 @@ const EmployeeDetail = () => {
           Hire Date:
         </Typography>
         <Typography variant="body2" color="textSecondary">
-          ({employee.hireDate})
+          {getDate(employee.hireDate)}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" mb={3}>
+          {getDateDifference(employee.hireDate)}
         </Typography>
 
         <Button

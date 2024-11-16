@@ -11,6 +11,7 @@ import {
   Container,
   Box,
 } from "@mui/material";
+import { getDate } from "../../utils";
 
 const DepartmentHistoryTable = ({ departmentHistory }) => {
   if (!departmentHistory) return "Loading...";
@@ -34,7 +35,7 @@ const DepartmentHistoryTable = ({ departmentHistory }) => {
             <TableBody>
               {departmentHistory.map((history, index) => (
                 <TableRow key={index}>
-                  <TableCell>{history.date}</TableCell>
+                  <TableCell>{getDate(history.date)}</TableCell>
                   <TableCell>
                     {history.Department ? history.Department.name : ""}
                   </TableCell>

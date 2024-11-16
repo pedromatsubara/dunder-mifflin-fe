@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -11,6 +11,7 @@ import { getEmployees, getImageUrl } from "../api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 import { Link } from "react-router-dom";
+import { getDate, getDateDifference } from "../utils";
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([]);
@@ -66,7 +67,7 @@ const EmployeeCard = ({ employee, onDelete }) => (
         Hire Date:
       </Typography>
       <Typography variant="body2" color="textSecondary">
-        ({employee.hireDate})
+        {getDate(employee.hireDate)} ({getDateDifference(employee.hireDate)})
       </Typography>
     </Box>
 
