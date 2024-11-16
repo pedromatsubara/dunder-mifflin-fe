@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getDate, getDateDifference } from "../utils";
 import {
   Box,
@@ -18,13 +18,17 @@ const EmployeeDetail = ({
   handleUpdateDepartment,
   handleToggleActive,
 }) => {
-  const [newDepartmentId, setNewDepartmentId] = useState(
-    employee?.departmentId
-  );
+  const [newDepartmentId, setNewDepartmentId] = useState(1);
 
   const handleChangeDepartment = (id) => {
     setNewDepartmentId(id);
   };
+
+  useEffect(() => {
+    if (employee) {
+      setNewDepartmentId(employee.departmentId);
+    }
+  }, [employee]);
 
   if (!employee || !departments) {
     return (
