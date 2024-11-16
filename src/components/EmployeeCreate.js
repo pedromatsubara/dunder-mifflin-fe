@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { createEmployee } from "../api";
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,6 +9,7 @@ import {
   TextField,
   Typography,
   Paper,
+  CircularProgress,
 } from "@mui/material";
 
 const EmployeeCreate = ({ departments }) => {
@@ -20,6 +21,7 @@ const EmployeeCreate = ({ departments }) => {
     address: "",
   });
   const [image, setImage] = useState(null);
+  const [loadingCreate, setLoadingCreate] = useState(false);
   const navigate = useNavigate();
 
   const handleImageChange = (e) => {
@@ -33,6 +35,7 @@ const EmployeeCreate = ({ departments }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoadingCreate(true);
     const data = new FormData();
     for (const key in employee) {
       data.append(key, employee[key]);
@@ -40,11 +43,16 @@ const EmployeeCreate = ({ departments }) => {
     if (image) {
       data.append("image", image);
     }
-    const employeeData = await createEmployee(data);
-    navigate(`/employees/${employeeData.id}`);
-  };
 
-  if (!departments) return "Loading...";
+    try {
+      const employeeData = await createEmployee(data);
+      navigate(`/employees/${employeeData.id}`);
+    } catch (error) {
+      console.error("Error creating employee:", error);
+    } finally {
+      setLoadingCreate(false);
+    }
+  };
 
   return (
     <Container maxWidth="sm">
@@ -75,11 +83,17 @@ const EmployeeCreate = ({ departments }) => {
             select
             required
           >
-            {departments.map((department) => (
-              <MenuItem key={department.id} value={department.id}>
-                {department.name}
+            {departments.lenght ? (
+              <MenuItem key={1} disabled>
+                Loading departments...
               </MenuItem>
-            ))}
+            ) : (
+              departments.map((department) => (
+                <MenuItem key={department.id} value={department.id}>
+                  {department.name}
+                </MenuItem>
+              ))
+            )}
           </TextField>
           <TextField
             name="phone"
@@ -107,8 +121,15 @@ const EmployeeCreate = ({ departments }) => {
             </Button>
             {image && <Typography variant="body2">{image.name}</Typography>}
           </Box>
-          <Button type="submit" variant="contained" color="primary" fullWidth>
-            Create Employee
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            disabled={loadingCreate}
+            startIcon={loadingCreate && <CircularProgress size={20} />}
+          >
+            {loadingCreate ? "Creating..." : "Create Employee"}
           </Button>
         </Box>
       </Paper>
