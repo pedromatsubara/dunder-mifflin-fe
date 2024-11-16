@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Container, Typography } from "@mui/material";
+import EmployeeList from "../components/EmployeeList";
 
 const EmployeeListPage = () => {
   return (
@@ -9,6 +10,7 @@ const EmployeeListPage = () => {
           Employees
         </Typography>
       </Box>
+      <EmployeeList />
     </Container>
   );
 };
