@@ -7,11 +7,13 @@ import {
   Switch,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import Logo from "./Logo";
 
 function NavBar({ isDarkMode, onThemeSwitch }) {
   return (
     <AppBar position="static">
       <Toolbar>
+        <Logo isDarkMode={isDarkMode} />
         <Button color="inherit" component={Link} to="/employees">
           List Employees
         </Button>
