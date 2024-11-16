@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -108,6 +108,8 @@ const styles = {
     width: 100,
     height: 100,
     marginRight: 2,
+    border: "2px solid",
+    borderColor: "primary.main",
   },
   deleteButton: {
     "&:hover": {

@@ -1,7 +1,14 @@
-import { AppBar, Toolbar, Button } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  Typography,
+  Box,
+  Switch,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 
-function NavBar() {
+function NavBar({ isDarkMode, onThemeSwitch }) {
   return (
     <AppBar position="static">
       <Toolbar>
@@ -11,6 +18,16 @@ function NavBar() {
         <Button color="inherit" component={Link} to="/create-employee">
           Add Employee
         </Button>
+        <Box sx={{ ml: "auto", display: "flex", alignItems: "center" }}>
+          <Switch
+            checked={isDarkMode}
+            onChange={onThemeSwitch}
+            color="default"
+          />
+          <Typography variant="body1" sx={{ marginLeft: 1 }}>
+            {isDarkMode ? "Dark Mode" : "Light Mode"}
+          </Typography>
+        </Box>
       </Toolbar>
     </AppBar>
   );

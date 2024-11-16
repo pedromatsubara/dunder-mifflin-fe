@@ -153,6 +153,8 @@ const styles = {
     width: 120,
     height: 120,
     marginBottom: 2,
+    border: "2px solid",
+    borderColor: "primary.main",
   },
   select: {
     minWidth: 180,
