@@ -61,10 +61,33 @@ const EmployeeDetail = ({
           </Typography>
         </Box>
 
-        <Box mb={3}>
-          <InfoRow label="Employee ID" value={employee.id} />
-          <InfoRow label="Telephone" value={employee.phone} />
-          <InfoRow label="Address" value={employee.address} />
+        <Box mb={3} display="flex" justifyContent="space-between">
+          <Box>
+            <InfoRow label="Employee ID" value={employee.id} />
+            <InfoRow label="Telephone" value={employee.phone} />
+            <InfoRow label="Address" value={employee.address} />
+          </Box>
+
+          <Box textAlign="right">
+            <Typography variant="body1" color="textPrimary">
+              Hire Date:
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              {getDate(employee.hireDate)}
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              {getDateDifference(employee.hireDate)}
+            </Typography>
+
+            <Button
+              variant="contained"
+              onClick={() => handleToggleActive(!employee.active)}
+              color={employee.active ? "error" : "success"}
+              sx={styles.toggleActiveButton}
+            >
+              {employee.active ? "Deactivate" : "Activate"}
+            </Button>
+          </Box>
         </Box>
 
         <Typography variant="body1" color="textPrimary" mb={1}>
@@ -94,25 +117,6 @@ const EmployeeDetail = ({
             Update
           </Button>
         </Box>
-
-        <Typography variant="body1" color="textPrimary">
-          Hire Date:
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
-          {getDate(employee.hireDate)}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" mb={3}>
-          {getDateDifference(employee.hireDate)}
-        </Typography>
-
-        <Button
-          variant="contained"
-          onClick={() => handleToggleActive(!employee.active)}
-          color={employee.active ? "error" : "success"}
-          sx={styles.toggleActiveButton}
-        >
-          {employee.active ? "Deactivate" : "Activate"}
-        </Button>
       </Paper>
     </Container>
   );
@@ -143,21 +147,27 @@ const SkeletonEmployeeDetail = () => (
   <Paper elevation={3} sx={styles.paper}>
     <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
       <Skeleton variant="circular" sx={styles.avatar} />
-      <Skeleton variant="text" width="60%" height={30} />
+      <Skeleton variant="text" width="60%" height={30} sx={{ mt: 2 }} />
       <Skeleton variant="text" width="40%" />
     </Box>
-    <Box mb={3}>
-      <Skeleton variant="text" width="100%" />
-      <Skeleton variant="text" width="100%" />
-      <Skeleton variant="text" width="100%" />
+
+    <Box mb={5}>
+      <Skeleton variant="text" width="100%" height={24} sx={{ mb: 1 }} />
+      <Skeleton variant="text" width="100%" height={24} sx={{ mb: 1 }} />
+      <Skeleton variant="text" width="100%" height={24} />
     </Box>
-    <Skeleton variant="rectangular" width="100%" height={36} />
+
+    <Skeleton variant="text" width="100%" height={24} sx={{ mb: 1 }} />
+    <Box display="flex" gap={1} alignItems="center" mb={3}>
+      <Skeleton variant="rectangular" sx={{ flexGrow: 1, height: 40 }} />
+      <Skeleton variant="rectangular" width={80} height={40} />
+    </Box>
   </Paper>
 );
 
 const styles = {
   buttonInactive: {
-    marginTop: -1,
+    marginTop: -3,
     "&.Mui-disabled": {
       backgroundColor: "#d32f2f",
       color: "white",
@@ -179,6 +189,7 @@ const styles = {
   },
   select: {
     minWidth: 180,
+    flexGrow: 1,
   },
 };
 
