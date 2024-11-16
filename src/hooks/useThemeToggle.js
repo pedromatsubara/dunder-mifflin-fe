@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { darkTheme, lightTheme } from "../theme";
 
 export function useThemeToggle() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const handleThemeSwitch = () => {
     setIsDarkMode(!isDarkMode);
