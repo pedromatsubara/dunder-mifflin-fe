@@ -47,13 +47,6 @@ const components = {
       },
     },
   },
-  MuiAppBar: {
-    styleOverrides: {
-      root: {
-        backgroundColor: "#005BB5",
-      },
-    },
-  },
 };
 
 export const lightTheme = createTheme({
