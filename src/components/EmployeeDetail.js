@@ -1,10 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  getDepartments,
-  getEmployeeById,
-  getImageUrl,
-  updateEmployee,
-} from "../api";
+import { useState } from "react";
+import { getImageUrl } from "../api";
 import { getDate, getDateDifference } from "../utils";
 import {
   Avatar,
@@ -16,12 +11,13 @@ import {
   Typography,
   Paper,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
 
-const EmployeeDetail = () => {
-  const { id } = useParams();
-  const [employee, setEmployee] = useState(null);
-  const [departments, setDepartments] = useState([]);
+const EmployeeDetail = ({
+  employee,
+  departments,
+  handleUpdateDepartment,
+  handleToggleActive,
+}) => {
   const [newDepartmentId, setNewDepartmentId] = useState(
     employee?.departmentId
   );
@@ -29,30 +25,6 @@ const EmployeeDetail = () => {
   const handleChangeDepartment = (id) => {
     setNewDepartmentId(id);
   };
-
-  const handleUpdateDepartment = async (newDepartmentId) => {};
-  const handleToggleActive = async (employeeActive) => {
-    const employeeData = await updateEmployee(id, {
-      active: employeeActive,
-    });
-    setEmployee(employeeData);
-  };
-
-  const fetchData = async (employeeId) => {
-    try {
-      const employeeData = await getEmployeeById(employeeId);
-      const departmentsData = await getDepartments();
-
-      setEmployee(employeeData);
-      setDepartments(departmentsData);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData(id);
-  }, [id]);
 
   if (!employee) return "Loading...";
 
