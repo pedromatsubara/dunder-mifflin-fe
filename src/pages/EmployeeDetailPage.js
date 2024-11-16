@@ -92,11 +92,9 @@ const EmployeeDetailPage = () => {
         handleUpdateDepartment={handleUpdateDepartment}
         handleToggleActive={handleToggleActive}
       />
-      {departmentHistory && (
-        <Box mt={4}>
-          <DepartmentHistoryTable departmentHistory={departmentHistory} />
-        </Box>
-      )}
+      <Box mt={4}>
+        <DepartmentHistoryTable departmentHistory={departmentHistory} />
+      </Box>
     </Container>
   );
 };

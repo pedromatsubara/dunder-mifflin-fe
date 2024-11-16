@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Table,
   TableBody,
@@ -10,11 +9,14 @@ import {
   Typography,
   Container,
   Box,
+  Skeleton,
 } from "@mui/material";
 import { getDate } from "../../utils";
 
 const DepartmentHistoryTable = ({ departmentHistory }) => {
-  if (!departmentHistory) return "Loading...";
+  if (!departmentHistory.length) {
+    return <DepartmentHistorySkeleton />;
+  }
 
   return (
     <Container maxWidth="sm">
@@ -49,9 +51,50 @@ const DepartmentHistoryTable = ({ departmentHistory }) => {
   );
 };
 
+const DepartmentHistorySkeleton = () => {
+  return (
+    <Container maxWidth="sm">
+      <Paper elevation={3} sx={styles.container}>
+        <Box sx={styles.titleBox}>
+          <Skeleton variant="text" width={180} height={30} />
+        </Box>
+        <TableContainer>
+          <Table aria-label="department history table">
+            <TableHead>
+              <TableRow>
+                <TableCell sx={styles.headerCell}>
+                  <Skeleton variant="text" width={100} height={20} />
+                </TableCell>
+                <TableCell sx={styles.headerCell}>
+                  <Skeleton variant="text" width={200} height={20} />
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow key={1}>
+                <TableCell>
+                  <Skeleton variant="text" width={100} height={20} />
+                </TableCell>
+                <TableCell>
+                  <Skeleton variant="text" width={200} height={20} />
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+    </Container>
+  );
+};
+
 const styles = {
   container: { mt: 3, p: 2, borderRadius: 2 },
-  titleBox: { mb: 2, textAlign: "center" },
+  titleBox: {
+    mb: 2,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   headerCell: { fontWeight: "bold" },
 };
 
