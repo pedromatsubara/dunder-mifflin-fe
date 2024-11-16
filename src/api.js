@@ -34,3 +34,8 @@ export const deleteEmployee = async (id) => {
   const response = await api.delete(`/employees/${id}`);
   return response.data;
 };
+
+export const getDepartmentHistoryData = async (id) => {
+  const response = await api.get(`/department-history/${id}`);
+  return response.data;
+};
