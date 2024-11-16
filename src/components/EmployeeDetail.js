@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getDepartments, getEmployeeById, getImageUrl } from "../api";
+import {
+  getDepartments,
+  getEmployeeById,
+  getImageUrl,
+  updateEmployee,
+} from "../api";
 import { getDate, getDateDifference } from "../utils";
 import {
   Avatar,
@@ -26,7 +31,12 @@ const EmployeeDetail = () => {
   };
 
   const handleUpdateDepartment = async (newDepartmentId) => {};
-  const handleToggleActive = async (employeeActive) => {};
+  const handleToggleActive = async (employeeActive) => {
+    const employeeData = await updateEmployee(id, {
+      active: employeeActive,
+    });
+    setEmployee(employeeData);
+  };
 
   const fetchData = async (employeeId) => {
     try {
@@ -55,6 +65,16 @@ const EmployeeDetail = () => {
             src={getImageUrl(`employee-${employee.id}.jpg`)}
             sx={styles.avatar}
           />
+          {!employee.active && (
+            <Button
+              variant="contained"
+              size="small"
+              sx={styles.buttonInactive}
+              disabled
+            >
+              Inactive
+            </Button>
+          )}
           <Typography variant="h5" sx={{ mt: 2 }}>
             {employee.firstName} {employee.lastName}
           </Typography>
@@ -142,6 +162,13 @@ const InfoRow = ({ label, value }) => (
 );
 
 const styles = {
+  buttonInactive: {
+    marginTop: -1,
+    "&.Mui-disabled": {
+      backgroundColor: "#d32f2f",
+      color: "white",
+    },
+  },
   toggleActiveButton: {
     marginTop: 1,
     marginLeft: -1,

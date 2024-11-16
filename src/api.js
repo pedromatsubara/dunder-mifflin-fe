@@ -30,6 +30,15 @@ export const createEmployee = async (employee) => {
   return response.data;
 };
 
+export const updateEmployee = async (id, employee) => {
+  const response = await api.put(`/employees/${id}`, employee, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response.data;
+};
+
 export const deleteEmployee = async (id) => {
   const response = await api.delete(`/employees/${id}`);
   return response.data;
