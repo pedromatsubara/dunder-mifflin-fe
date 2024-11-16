@@ -86,14 +86,12 @@ const EmployeeDetailPage = () => {
           Employee Details
         </Typography>
       </Box>
-      {employee && departments && (
-        <EmployeeDetail
-          employee={employee}
-          departments={departments}
-          handleUpdateDepartment={handleUpdateDepartment}
-          handleToggleActive={handleToggleActive}
-        />
-      )}
+      <EmployeeDetail
+        employee={employee}
+        departments={departments}
+        handleUpdateDepartment={handleUpdateDepartment}
+        handleToggleActive={handleToggleActive}
+      />
       {departmentHistory && (
         <Box mt={4}>
           <DepartmentHistoryTable departmentHistory={departmentHistory} />

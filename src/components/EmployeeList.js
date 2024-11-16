@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { Box, Button, Typography, Container, Paper } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  Container,
+  Paper,
+  Skeleton,
+} from "@mui/material";
 import { deleteEmployee, getEmployees } from "../api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
@@ -34,7 +41,9 @@ function EmployeeList() {
   return (
     <Container>
       {loading
-        ? "Loading..."
+        ? Array.from(new Array(3)).map((item, index) => (
+            <SkeletonEmployeeCard key={index} />
+          ))
         : employees.map((employee) => (
             <EmployeeCard
               key={employee.id}
@@ -48,7 +57,7 @@ function EmployeeList() {
 
 const EmployeeCard = ({ employee, onDelete }) => (
   <Paper key={employee.id} elevation={3} sx={styles.paper}>
-    <EmployeeAvatar employee={employee} />
+    <EmployeeAvatar employee={employee} style={styles.avatar} />
     <Box flexGrow={1} display="flex" flexDirection="column" gap={1}>
       <Typography variant="h6" noWrap color="textPrimary">
         {employee.firstName} {employee.lastName}
@@ -86,6 +95,22 @@ const EmployeeCard = ({ employee, onDelete }) => (
   </Paper>
 );
 
+const SkeletonEmployeeCard = () => (
+  <Paper elevation={3} sx={styles.paper}>
+    <Skeleton variant="circular" sx={styles.avatar} />
+    <Box flexGrow={1} display="flex" flexDirection="column" gap={1}>
+      <Skeleton variant="text" width="60%" height={30} />
+      <Skeleton variant="text" width="40%" />
+      <Skeleton variant="text" width="30%" />
+      <Skeleton variant="text" width="50%" />
+    </Box>
+    <Box display="flex" flexDirection="column" gap={1}>
+      <Skeleton variant="rectangular" width={80} height={36} />
+      <Skeleton variant="rectangular" width={80} height={36} />
+    </Box>
+  </Paper>
+);
+
 const styles = {
   paper: {
     display: "flex",
@@ -94,6 +119,12 @@ const styles = {
     marginBottom: 3,
     borderRadius: 2,
     gap: 2,
+  },
+  avatar: {
+    width: 120,
+    height: 120,
+    border: "2px solid",
+    borderColor: "primary.main",
   },
   deleteButton: {
     "&:hover": {

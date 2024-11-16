@@ -8,6 +8,7 @@ import {
   Select,
   Typography,
   Paper,
+  Skeleton,
 } from "@mui/material";
 import EmployeeAvatar from "./EmployeeAvatar";
 
@@ -25,13 +26,19 @@ const EmployeeDetail = ({
     setNewDepartmentId(id);
   };
 
-  if (!employee) return "Loading...";
+  if (!employee || !departments) {
+    return (
+      <Container maxWidth="sm">
+        <SkeletonEmployeeDetail />
+      </Container>
+    );
+  }
 
   return (
     <Container maxWidth="sm">
       <Paper elevation={3} sx={styles.paper}>
         <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-          <EmployeeAvatar employee={employee} />
+          <EmployeeAvatar employee={employee} style={styles.avatar} />
           {!employee.active && (
             <Button
               variant="contained"
@@ -128,6 +135,22 @@ const InfoRow = ({ label, value }) => (
   </Box>
 );
 
+const SkeletonEmployeeDetail = () => (
+  <Paper elevation={3} sx={styles.paper}>
+    <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
+      <Skeleton variant="circular" sx={styles.avatar} />
+      <Skeleton variant="text" width="60%" height={30} />
+      <Skeleton variant="text" width="40%" />
+    </Box>
+    <Box mb={3}>
+      <Skeleton variant="text" width="100%" />
+      <Skeleton variant="text" width="100%" />
+      <Skeleton variant="text" width="100%" />
+    </Box>
+    <Skeleton variant="rectangular" width="100%" height={36} />
+  </Paper>
+);
+
 const styles = {
   buttonInactive: {
     marginTop: -1,
@@ -143,6 +166,12 @@ const styles = {
   paper: {
     padding: 4,
     borderRadius: 2,
+  },
+  avatar: {
+    width: 120,
+    height: 120,
+    border: "2px solid",
+    borderColor: "primary.main",
   },
   select: {
     minWidth: 180,
