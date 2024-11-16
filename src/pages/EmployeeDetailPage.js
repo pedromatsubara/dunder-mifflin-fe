@@ -46,7 +46,19 @@ const EmployeeDetailPage = () => {
     }
   };
 
-  const handleUpdateDepartment = async (newDepartmentId) => {};
+  const handleUpdateDepartment = useCallback(
+    async (newDepartmentId) => {
+      const employeeData = await updateEmployee(id, {
+        departmentId: newDepartmentId,
+      });
+
+      const historyData = await getDepartmentHistoryData(id);
+
+      setEmployee(employeeData);
+      setDepartmentHistory(historyData);
+    },
+    [id]
+  );
 
   const handleToggleActive = useCallback(
     async (employeeActive) => {
