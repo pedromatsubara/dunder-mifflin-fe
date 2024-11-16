@@ -7,7 +7,7 @@ import {
   Container,
   Paper,
 } from "@mui/material";
-import { getEmployees } from "../api";
+import { getEmployees, getImageUrl } from "../api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 import { Link } from "react-router-dom";
@@ -52,6 +52,7 @@ const EmployeeCard = ({ employee, onDelete }) => (
   <Paper key={employee.id} elevation={3} sx={styles.paper}>
     <Avatar
       alt={`${employee.firstName} ${employee.lastName}`}
+      src={getImageUrl(`employee-${employee.id}.jpg`)}
       sx={styles.avatar}
     />
     <Box flexGrow={1} display="flex" flexDirection="column" gap={1}>

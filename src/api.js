@@ -11,6 +11,10 @@ export const getDepartments = async () => {
   return response.data;
 };
 
+export const getImageUrl = (path) => {
+  return `${baseURL}/uploads/${path}`;
+};
+
 export const getEmployees = async () => {
   const response = await api.get("/employees");
   return response.data;

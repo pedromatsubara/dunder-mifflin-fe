@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import EmployeeCreate from "../components/EmployeeCreate";
 import { getDepartments } from "../api";
 import { Container, Box, Typography } from "@mui/material";

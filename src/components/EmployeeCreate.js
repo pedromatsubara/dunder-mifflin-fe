@@ -7,6 +7,7 @@ import {
   Container,
   MenuItem,
   TextField,
+  Typography,
   Paper,
 } from "@mui/material";
 
@@ -18,7 +19,12 @@ const EmployeeCreate = ({ departments }) => {
     phone: "",
     address: "",
   });
+  const [image, setImage] = useState(null);
   const navigate = useNavigate();
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,6 +36,9 @@ const EmployeeCreate = ({ departments }) => {
     const data = new FormData();
     for (const key in employee) {
       data.append(key, employee[key]);
+    }
+    if (image) {
+      data.append("image", image);
     }
     const employeeData = await createEmployee(data);
     navigate(`/employees/${employeeData.id}`);
@@ -86,6 +95,18 @@ const EmployeeCreate = ({ departments }) => {
             value={employee.address}
             onChange={handleChange}
           />
+          <Box display="flex" alignItems="center" gap={1}>
+            <Button variant="outlined" component="label">
+              Upload Image
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={handleImageChange}
+              />
+            </Button>
+            {image && <Typography variant="body2">{image.name}</Typography>}
+          </Box>
           <Button type="submit" variant="contained" color="primary" fullWidth>
             Create Employee
           </Button>

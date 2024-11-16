@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getDepartments, getEmployeeById } from "../api";
+import { getDepartments, getEmployeeById, getImageUrl } from "../api";
 import {
   Avatar,
   Box,
@@ -49,7 +49,11 @@ const EmployeeDetail = () => {
     <Container maxWidth="sm">
       <Paper elevation={3} sx={styles.paper}>
         <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-          <Avatar alt={employee.firstName} sx={styles.avatar} />
+          <Avatar
+            alt={employee.firstName}
+            src={getImageUrl(`employee-${employee.id}.jpg`)}
+            sx={styles.avatar}
+          />
           <Typography variant="h5" sx={{ mt: 2 }}>
             {employee.firstName} {employee.lastName}
           </Typography>
