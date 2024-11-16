@@ -1,5 +1,5 @@
-import React from "react";
 import { Box, Container, Typography } from "@mui/material";
+import EmployeeDetail from "../components/EmployeeDetail";
 
 const EmployeeDetailPage = () => {
   return (
@@ -9,6 +9,7 @@ const EmployeeDetailPage = () => {
           Employee Detail Page
         </Typography>
       </Box>
+      <EmployeeDetail />
     </Container>
   );
 };
