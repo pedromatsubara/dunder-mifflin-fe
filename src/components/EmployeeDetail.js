@@ -59,60 +59,9 @@ const EmployeeDetail = () => {
         </Box>
 
         <Box mb={3}>
-          <Box
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-            gap={1}
-            sx={{ py: 0.5 }}
-          >
-            <Typography
-              variant="subtitle2"
-              color="textPrimary"
-              sx={{ fontWeight: 500 }}
-            >
-              Employee ID:
-            </Typography>
-            <Typography variant="body2" color="textSecondary">
-              {employee.id}
-            </Typography>
-          </Box>
-          <Box
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-            gap={1}
-            sx={{ py: 0.5 }}
-          >
-            <Typography
-              variant="subtitle2"
-              color="textPrimary"
-              sx={{ fontWeight: 500 }}
-            >
-              Telephone:
-            </Typography>
-            <Typography variant="body2" color="textSecondary">
-              {employee.phone}
-            </Typography>
-          </Box>
-          <Box
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-            gap={1}
-            sx={{ py: 0.5 }}
-          >
-            <Typography
-              variant="subtitle2"
-              color="textPrimary"
-              sx={{ fontWeight: 500 }}
-            >
-              Address:
-            </Typography>
-            <Typography variant="body2" color="textSecondary">
-              {employee.address}
-            </Typography>
-          </Box>
+          <InfoRow label="Employee ID" value={employee.id} />
+          <InfoRow label="Telephone" value={employee.phone} />
+          <InfoRow label="Address" value={employee.address} />
         </Box>
 
         <Typography variant="body1" color="textPrimary" mb={1}>
@@ -162,6 +111,27 @@ const EmployeeDetail = () => {
     </Container>
   );
 };
+
+const InfoRow = ({ label, value }) => (
+  <Box
+    display="flex"
+    flexDirection="row"
+    alignItems="center"
+    gap={1}
+    sx={{ py: 0.5 }}
+  >
+    <Typography
+      variant="subtitle2"
+      color="textPrimary"
+      sx={{ fontWeight: 500 }}
+    >
+      {label}:
+    </Typography>
+    <Typography variant="body2" color="textSecondary">
+      {value}
+    </Typography>
+  </Box>
+);
 
 const styles = {
   toggleActiveButton: {
