@@ -4,10 +4,12 @@ import EmployeeListPage from "./pages/EmployeeListPage";
 import EmployeeCreatePage from "./pages/EmployeeCreatePage";
 import EmployeeDetailPage from "./pages/EmployeeDetailPage";
 import HomePage from "./pages/HomePage";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <Router>
+      <NavBar />
       <Box
         display="flex"
         justifyContent="center"
