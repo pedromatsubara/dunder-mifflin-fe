@@ -7,7 +7,7 @@ import {
   Container,
   Paper,
 } from "@mui/material";
-import { getEmployees, getImageUrl } from "../api";
+import { deleteEmployee, getEmployees, getImageUrl } from "../api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 import { Link } from "react-router-dom";
@@ -32,7 +32,10 @@ function EmployeeList() {
     fetchEmployees();
   }, []);
 
-  const onDelete = async (id) => {};
+  const onDelete = async (id) => {
+    await deleteEmployee(id);
+    setEmployees(employees.filter((employee) => employee.id !== id));
+  };
 
   return (
     <Container>
