@@ -1,6 +1,9 @@
 {
   "name": "fullstack-assessment-fe",
   "version": "1.0.0",
+  "description": "Dunder Mifflin Management App",
+  "author": "Pedro Pereira",
+  "license": "ISC",
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
@@ -34,5 +37,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
