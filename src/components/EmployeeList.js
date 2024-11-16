@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  Typography,
-  Avatar,
-  Container,
-  Paper,
-} from "@mui/material";
-import { deleteEmployee, getEmployees, getImageUrl } from "../api";
+import { Box, Button, Typography, Container, Paper } from "@mui/material";
+import { deleteEmployee, getEmployees } from "../api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 import { Link } from "react-router-dom";
 import { getDate, getDateDifference } from "../utils";
+import EmployeeAvatar from "./EmployeeAvatar";
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([]);
@@ -54,11 +48,7 @@ function EmployeeList() {
 
 const EmployeeCard = ({ employee, onDelete }) => (
   <Paper key={employee.id} elevation={3} sx={styles.paper}>
-    <Avatar
-      alt={`${employee.firstName} ${employee.lastName}`}
-      src={getImageUrl(`employee-${employee.id}.jpg`)}
-      sx={styles.avatar}
-    />
+    <EmployeeAvatar employee={employee} />
     <Box flexGrow={1} display="flex" flexDirection="column" gap={1}>
       <Typography variant="h6" noWrap color="textPrimary">
         {employee.firstName} {employee.lastName}
@@ -103,13 +93,7 @@ const styles = {
     padding: 2,
     marginBottom: 3,
     borderRadius: 2,
-  },
-  avatar: {
-    width: 100,
-    height: 100,
-    marginRight: 2,
-    border: "2px solid",
-    borderColor: "primary.main",
+    gap: 2,
   },
   deleteButton: {
     "&:hover": {

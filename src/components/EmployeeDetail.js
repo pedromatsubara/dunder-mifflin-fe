@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { getImageUrl } from "../api";
 import { getDate, getDateDifference } from "../utils";
 import {
-  Avatar,
   Box,
   Button,
   Container,
@@ -11,6 +9,7 @@ import {
   Typography,
   Paper,
 } from "@mui/material";
+import EmployeeAvatar from "./EmployeeAvatar";
 
 const EmployeeDetail = ({
   employee,
@@ -32,11 +31,7 @@ const EmployeeDetail = ({
     <Container maxWidth="sm">
       <Paper elevation={3} sx={styles.paper}>
         <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-          <Avatar
-            alt={employee.firstName}
-            src={getImageUrl(`employee-${employee.id}.jpg`)}
-            sx={styles.avatar}
-          />
+          <EmployeeAvatar employee={employee} />
           {!employee.active && (
             <Button
               variant="contained"
@@ -148,13 +143,6 @@ const styles = {
   paper: {
     padding: 4,
     borderRadius: 2,
-  },
-  avatar: {
-    width: 120,
-    height: 120,
-    marginBottom: 2,
-    border: "2px solid",
-    borderColor: "primary.main",
   },
   select: {
     minWidth: 180,
