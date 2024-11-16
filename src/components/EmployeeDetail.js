@@ -30,7 +30,7 @@ const EmployeeDetail = ({
     }
   }, [employee]);
 
-  if (!employee || !departments) {
+  if (!employee || !departments.length) {
     return (
       <Container maxWidth="sm">
         <SkeletonEmployeeDetail />
