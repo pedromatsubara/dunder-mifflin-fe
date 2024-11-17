@@ -41,18 +41,8 @@ const EmployeeDetail = ({
   return (
     <Container maxWidth="sm">
       <Paper elevation={3} sx={styles.paper}>
-        <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-          <EmployeeAvatar employee={employee} style={styles.avatar} />
-          {!employee.active && (
-            <Button
-              variant="contained"
-              size="small"
-              sx={styles.buttonInactive}
-              disabled
-            >
-              Inactive
-            </Button>
-          )}
+        <Box display="flex" flexDirection="column" alignItems="center">
+          <EmployeeAvatar employee={employee} styles={styles} />
           <Typography variant="h5" sx={{ mt: 2 }}>
             {employee.firstName} {employee.lastName}
           </Typography>
@@ -61,7 +51,7 @@ const EmployeeDetail = ({
           </Typography>
         </Box>
 
-        <Box mb={3} display="flex" justifyContent="space-between">
+        <Box mb={3} mt={2} display="flex" justifyContent="space-between">
           <Box>
             <InfoRow label="Employee ID" value={employee.id} />
             <InfoRow label="Telephone" value={employee.phone} />

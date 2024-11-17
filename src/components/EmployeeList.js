@@ -57,7 +57,7 @@ function EmployeeList() {
 
 const EmployeeCard = ({ employee, onDelete }) => (
   <Paper key={employee.id} elevation={3} sx={styles.paper}>
-    <EmployeeAvatar employee={employee} style={styles.avatar} />
+    <EmployeeAvatar employee={employee} styles={styles} />
     <Box flexGrow={1} display="flex" flexDirection="column" gap={1}>
       <Typography variant="h6" noWrap color="textPrimary">
         {employee.firstName} {employee.lastName}
@@ -112,6 +112,13 @@ const SkeletonEmployeeCard = () => (
 );
 
 const styles = {
+  buttonInactive: {
+    marginTop: -3,
+    "&.Mui-disabled": {
+      backgroundColor: "#d32f2f",
+      color: "white",
+    },
+  },
   paper: {
     display: "flex",
     alignItems: "center",
