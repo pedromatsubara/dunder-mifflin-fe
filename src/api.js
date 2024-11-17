@@ -12,7 +12,7 @@ export const getDepartments = async () => {
 };
 
 export const getImageUrl = (path) => {
-  return `${baseURL}/uploads/${path}`;
+  return `${baseURL}/images/${path}`;
 };
 
 export const getEmployees = async () => {
