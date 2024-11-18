@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+![Logo](./logo.jpg)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# Dunder Mifflin Management App
 
-In the project directory, you can run:
+This React project is inspired by the TV series "The Office". It is designed to manage employee data and department history while communicating with a RESTful API using CRUD operations. The application leverages design patterns to ensure maintainability and scalability.
 
-### `npm start`
+It is built with React and includes the following features:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**Component-Based Architecture:** The application uses a modular structure, separating logic and presentation for easier readability and reuse, with clean separation of concerns.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Skeleton Loading States:** Placeholder skeletons are used for improved user experience during data loading and avoid layout-shift.
 
-### `npm test`
+**Responsive Design with MUI:** Material-UI is used for consistent and responsive styling across devices.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Error Handling:** Errors from the backend or unexpected issues in components are caught and displayed with user-friendly messages.
 
-### `npm run build`
+**Custom Hooks:** Hooks like useThemeToggle simplify shared state management, improving code readability and consistency.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Run Locally
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Clone the project
 
-### `npm run eject`
+```bash
+  git clone https://git.number8.com/pedro.pereira/fullstack-assessment-fe.git
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Go to the project directory
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+  cd fullstack-assessment-fe
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Install dependencies
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+  npm install
+```
 
-## Learn More
+Start the server
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+  npm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+## Design Patterns
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+#### Container/Presentational Pattern:
 
-### Analyzing the Bundle Size
+- Container components managing state and business logic (e.g., EmployeeDetailPage).
+- Presentational components focusing on rendering UI (e.g., EmployeeDetail, DepartmentHistoryTable).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+#### Facade Pattern:
 
-### Making a Progressive Web App
+- API functions (getDepartments, getEmployeeById, etc.) abstract away the complexity of HTTP requests and error handling, simplifying interactions across the app.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+#### Factory-like Pattern:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- If api.js expands to include more complex configurations to create Axios instances based on different parameters, this would become a more classic Factory Pattern.
