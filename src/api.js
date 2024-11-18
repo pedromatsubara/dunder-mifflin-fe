@@ -49,9 +49,7 @@ export const getEmployeeById = async (id) => {
 
 export const createEmployee = async (employee) => {
   try {
-    const response = await api.post(`/employees/`, employee, {
-      headers: { "Content-Type": "application/json" },
-    });
+    const response = await api.post(`/employees/`, employee);
     return response.data;
   } catch (error) {
     console.error("Failed to create employee:", error);
@@ -61,9 +59,7 @@ export const createEmployee = async (employee) => {
 
 export const updateEmployee = async (id, employee) => {
   try {
-    const response = await api.put(`/employees/${id}`, employee, {
-      headers: { "Content-Type": "application/json" },
-    });
+    const response = await api.put(`/employees/${id}`, employee);
     return response.data;
   } catch (error) {
     console.error(`Failed to update employee with ID ${id}:`, error);
