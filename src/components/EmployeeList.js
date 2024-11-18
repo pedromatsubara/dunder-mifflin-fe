@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -13,29 +13,34 @@ import InfoIcon from "@mui/icons-material/Info";
 import { Link } from "react-router-dom";
 import { getDate, getDateDifference } from "../utils";
 import EmployeeAvatar from "./EmployeeAvatar";
+import { useError } from "../context/ErrorContext";
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { showError } = useError();
 
-  const fetchEmployees = async () => {
+  const fetchEmployees = useCallback(async () => {
     try {
       const data = await getEmployees();
       setEmployees(data);
-    } catch (error) {
-      console.error("Error fetching employees:", error);
-    } finally {
       setLoading(false);
+    } catch (error) {
+      showError("Failed to fetch employees.");
     }
-  };
+  }, [showError]);
 
   useEffect(() => {
     fetchEmployees();
-  }, []);
+  }, [fetchEmployees]);
 
   const onDelete = async (id) => {
-    await deleteEmployee(id);
-    setEmployees(employees.filter((employee) => employee.id !== id));
+    try {
+      await deleteEmployee(id);
+      setEmployees((prev) => prev.filter((employee) => employee.id !== id));
+    } catch (error) {
+      showError("Failed to delete employee. Please try again.");
+    }
   };
 
   return (

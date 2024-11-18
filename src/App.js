@@ -6,34 +6,42 @@ import EmployeeCreatePage from "./pages/EmployeeCreatePage";
 import EmployeeDetailPage from "./pages/EmployeeDetailPage";
 import HomePage from "./pages/HomePage";
 import NavBar from "./components/NavBar";
+import { ErrorProvider } from "./context/ErrorContext";
+import ErrorMessage from "./components/ErrorMessage";
 
 function App() {
   const { theme, isDarkMode, handleThemeSwitch } = useThemeToggle();
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router>
-        <NavBar isDarkMode={isDarkMode} onThemeSwitch={handleThemeSwitch} />
-        <Box
-          display="flex"
-          justifyContent="center"
-          sx={{
-            minHeight: "100vh",
-            paddingTop: 3,
-          }}
-        >
-          <Container maxWidth="md">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/employees" element={<EmployeeListPage />} />
-              <Route path="/create-employee" element={<EmployeeCreatePage />} />
-              <Route path="/employees/:id" element={<EmployeeDetailPage />} />
-            </Routes>
-          </Container>
-        </Box>
-      </Router>
-    </ThemeProvider>
+    <ErrorProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          <NavBar isDarkMode={isDarkMode} onThemeSwitch={handleThemeSwitch} />
+          <Box
+            display="flex"
+            justifyContent="center"
+            sx={{
+              minHeight: "100vh",
+              paddingTop: 3,
+            }}
+          >
+            <Container maxWidth="md">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/employees" element={<EmployeeListPage />} />
+                <Route
+                  path="/create-employee"
+                  element={<EmployeeCreatePage />}
+                />
+                <Route path="/employees/:id" element={<EmployeeDetailPage />} />
+              </Routes>
+            </Container>
+          </Box>
+          <ErrorMessage />
+        </Router>
+      </ThemeProvider>
+    </ErrorProvider>
   );
 }
 

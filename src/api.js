@@ -6,9 +6,21 @@ const api = axios.create({
   baseURL: baseURL,
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export const getDepartments = async () => {
-  const response = await api.get(`/departments`);
-  return response.data;
+  try {
+    const response = await api.get(`/departments`);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch departments:", error);
+    throw error;
+  }
 };
 
 export const getImageUrl = (path) => {
@@ -16,35 +28,68 @@ export const getImageUrl = (path) => {
 };
 
 export const getEmployees = async () => {
-  const response = await api.get("/employees");
-  return response.data;
+  try {
+    const response = await api.get("/employees");
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch employees:", error);
+    throw error;
+  }
 };
 
 export const getEmployeeById = async (id) => {
-  const response = await api.get(`/employees/${id}`);
-  return response.data;
+  try {
+    const response = await api.get(`/employees/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch employee with ID ${id}:`, error);
+    throw error;
+  }
 };
 
 export const createEmployee = async (employee) => {
-  const response = await api.post(`/employees/`, employee);
-  return response.data;
+  try {
+    const response = await api.post(`/employees/`, employee, {
+      headers: { "Content-Type": "application/json" },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Failed to create employee:", error);
+    throw error;
+  }
 };
 
 export const updateEmployee = async (id, employee) => {
-  const response = await api.put(`/employees/${id}`, employee, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  return response.data;
+  try {
+    const response = await api.put(`/employees/${id}`, employee, {
+      headers: { "Content-Type": "application/json" },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to update employee with ID ${id}:`, error);
+    throw error;
+  }
 };
 
 export const deleteEmployee = async (id) => {
-  const response = await api.delete(`/employees/${id}`);
-  return response.data;
+  try {
+    const response = await api.delete(`/employees/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to delete employee with ID ${id}:`, error);
+    throw error;
+  }
 };
 
 export const getDepartmentHistoryData = async (id) => {
-  const response = await api.get(`/department-history/${id}`);
-  return response.data;
+  try {
+    const response = await api.get(`/department-history/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Failed to fetch department history for employee ID ${id}:`,
+      error
+    );
+    throw error;
+  }
 };

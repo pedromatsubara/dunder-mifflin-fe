@@ -11,6 +11,7 @@ import {
   Paper,
   CircularProgress,
 } from "@mui/material";
+import { useError } from "../context/ErrorContext";
 
 const EmployeeCreate = ({ departments }) => {
   const [employee, setEmployee] = useState({
@@ -23,6 +24,7 @@ const EmployeeCreate = ({ departments }) => {
   const [image, setImage] = useState(null);
   const [loadingCreate, setLoadingCreate] = useState(false);
   const navigate = useNavigate();
+  const { showError } = useError();
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
@@ -48,7 +50,7 @@ const EmployeeCreate = ({ departments }) => {
       const employeeData = await createEmployee(data);
       navigate(`/employees/${employeeData.id}`);
     } catch (error) {
-      console.error("Error creating employee:", error);
+      showError("Failed to create employee. Please try again.");
     } finally {
       setLoadingCreate(false);
     }
@@ -84,7 +86,7 @@ const EmployeeCreate = ({ departments }) => {
             required
           >
             {departments.lenght ? (
-              <MenuItem key={1} disabled>
+              <MenuItem key="loading" disabled>
                 Loading departments...
               </MenuItem>
             ) : (

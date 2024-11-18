@@ -9,75 +9,91 @@ import {
   updateEmployee,
 } from "../api";
 import { Container, Box, Typography } from "@mui/material";
+import { useError } from "../context/ErrorContext";
 
 const EmployeeDetailPage = () => {
   const { id } = useParams();
   const [employee, setEmployee] = useState(null);
   const [departments, setDepartments] = useState([]);
   const [departmentHistory, setDepartmentHistory] = useState([]);
+  const { showError } = useError();
 
-  const fetchDepartments = async () => {
+  const fetchDepartments = useCallback(async () => {
     try {
       const departmentsData = await getDepartments();
 
       setDepartments(departmentsData);
     } catch (error) {
-      console.error("Error fetching departments data:", error);
+      showError("Failed to fetch departments.");
     }
-  };
+  }, [showError]);
 
-  const fetchDepartmentHistory = async (employeeId) => {
-    try {
-      const historyData = await getDepartmentHistoryData(employeeId);
+  const fetchDepartmentHistory = useCallback(
+    async (employeeId) => {
+      try {
+        const historyData = await getDepartmentHistoryData(employeeId);
 
-      setDepartmentHistory(historyData);
-    } catch (error) {
-      console.error("Error fetching department history data:", error);
-    }
-  };
+        setDepartmentHistory(historyData);
+      } catch (error) {
+        showError("Failed to fetch department history data.");
+      }
+    },
+    [showError]
+  );
 
-  const fetchEmployees = async (employeeId) => {
-    try {
-      const employeeData = await getEmployeeById(employeeId);
+  const fetchEmployees = useCallback(
+    async (employeeId) => {
+      try {
+        const employeeData = await getEmployeeById(employeeId);
 
-      setEmployee(employeeData);
-    } catch (error) {
-      console.error("Error fetching employee data:", error);
-    }
-  };
+        setEmployee(employeeData);
+      } catch (error) {
+        showError("Failed to fetch employee data.");
+      }
+    },
+    [showError]
+  );
 
   const handleUpdateDepartment = useCallback(
     async (newDepartmentId) => {
-      const employeeData = await updateEmployee(id, {
-        departmentId: newDepartmentId,
-      });
+      try {
+        const employeeData = await updateEmployee(id, {
+          departmentId: newDepartmentId,
+        });
 
-      const historyData = await getDepartmentHistoryData(id);
+        const historyData = await getDepartmentHistoryData(id);
 
-      setEmployee(employeeData);
-      setDepartmentHistory(historyData);
+        setEmployee(employeeData);
+        setDepartmentHistory(historyData);
+      } catch (error) {
+        showError("Failed to update employee department.");
+      }
     },
-    [id]
+    [id, showError]
   );
 
   const handleToggleActive = useCallback(
     async (employeeActive) => {
-      const employeeData = await updateEmployee(id, {
-        active: employeeActive,
-      });
-      setEmployee(employeeData);
+      try {
+        const employeeData = await updateEmployee(id, {
+          active: employeeActive,
+        });
+        setEmployee(employeeData);
+      } catch (error) {
+        showError("Failed to update employee status.");
+      }
     },
-    [id]
+    [id, showError]
   );
 
   useEffect(() => {
     fetchDepartments();
-  }, []);
+  }, [fetchDepartments]);
 
   useEffect(() => {
     fetchEmployees(id);
     fetchDepartmentHistory(id);
-  }, [id]);
+  }, [id, fetchEmployees, fetchDepartmentHistory]);
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
