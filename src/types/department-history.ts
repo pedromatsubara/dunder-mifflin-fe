@@ -5,5 +5,5 @@ export interface DepartmentHistory {
   date: string;
   employeeId: number;
   departmentId: number;
-  department?: Department;
+  Department?: Department;
 }

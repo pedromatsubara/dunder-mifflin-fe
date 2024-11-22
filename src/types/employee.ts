@@ -9,5 +9,5 @@ export interface Employee {
   phone?: string;
   address?: string;
   departmentId: number;
-  department?: Department;
+  Department?: Department;
 }
