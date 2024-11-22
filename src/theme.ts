@@ -1,6 +1,6 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, ThemeOptions } from "@mui/material/styles";
 
-const lightPalette = {
+const lightPalette: ThemeOptions["palette"] = {
   mode: "light",
   primary: {
     main: "#005BB5",
@@ -19,7 +19,7 @@ const lightPalette = {
   },
 };
 
-const darkPalette = {
+const darkPalette: ThemeOptions["palette"] = {
   mode: "dark",
   primary: {
     main: "#8AB4F8",
@@ -38,7 +38,7 @@ const darkPalette = {
   },
 };
 
-const components = {
+const components: ThemeOptions["components"] = {
   MuiButton: {
     styleOverrides: {
       root: {
