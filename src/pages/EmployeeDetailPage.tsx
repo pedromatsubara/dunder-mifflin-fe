@@ -10,12 +10,15 @@ import {
 } from "../api";
 import { Container, Box, Typography } from "@mui/material";
 import { useError } from "../context/ErrorContext";
+import { Employee, Department, DepartmentHistory } from "../types";
 
-const EmployeeDetailPage = () => {
-  const { id } = useParams();
-  const [employee, setEmployee] = useState(null);
-  const [departments, setDepartments] = useState([]);
-  const [departmentHistory, setDepartmentHistory] = useState([]);
+const EmployeeDetailPage = (): JSX.Element => {
+  const { id } = useParams<{ id: string }>();
+  const [employee, setEmployee] = useState<Employee | null>(null);
+  const [departments, setDepartments] = useState<Department[]>([]);
+  const [departmentHistory, setDepartmentHistory] = useState<
+    DepartmentHistory[]
+  >([]);
   const { showError } = useError();
 
   const fetchDepartments = useCallback(async () => {
@@ -29,7 +32,7 @@ const EmployeeDetailPage = () => {
   }, [showError]);
 
   const fetchDepartmentHistory = useCallback(
-    async (employeeId) => {
+    async (employeeId: string) => {
       try {
         const historyData = await getDepartmentHistoryData(employeeId);
 
@@ -42,7 +45,7 @@ const EmployeeDetailPage = () => {
   );
 
   const fetchEmployees = useCallback(
-    async (employeeId) => {
+    async (employeeId: string) => {
       try {
         const employeeData = await getEmployeeById(employeeId);
 
@@ -55,7 +58,7 @@ const EmployeeDetailPage = () => {
   );
 
   const handleUpdateDepartment = useCallback(
-    async (newDepartmentId) => {
+    async (newDepartmentId: number) => {
       try {
         const employeeData = await updateEmployee(id, {
           departmentId: newDepartmentId,
@@ -73,7 +76,7 @@ const EmployeeDetailPage = () => {
   );
 
   const handleToggleActive = useCallback(
-    async (employeeActive) => {
+    async (employeeActive: boolean) => {
       try {
         const employeeData = await updateEmployee(id, {
           active: employeeActive,
@@ -91,8 +94,10 @@ const EmployeeDetailPage = () => {
   }, [fetchDepartments]);
 
   useEffect(() => {
-    fetchEmployees(id);
-    fetchDepartmentHistory(id);
+    if (id) {
+      fetchEmployees(id);
+      fetchDepartmentHistory(id);
+    }
   }, [id, fetchEmployees, fetchDepartmentHistory]);
 
   return (
