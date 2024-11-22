@@ -14,10 +14,11 @@ import { Link } from "react-router-dom";
 import { getDate, getDateDifference } from "../utils";
 import EmployeeAvatar from "./EmployeeAvatar";
 import { useError } from "../context/ErrorContext";
+import { Employee } from "../types";
 
 function EmployeeList() {
-  const [employees, setEmployees] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [employees, setEmployees] = useState<Employee[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const { showError } = useError();
 
   const fetchEmployees = useCallback(async () => {
@@ -34,9 +35,9 @@ function EmployeeList() {
     fetchEmployees();
   }, [fetchEmployees]);
 
-  const onDelete = async (id) => {
+  const onDelete = async (id: number) => {
     try {
-      await deleteEmployee(id);
+      await deleteEmployee(String(id));
       setEmployees((prev) => prev.filter((employee) => employee.id !== id));
     } catch (error) {
       showError("Failed to delete employee. Please try again.");
@@ -60,7 +61,12 @@ function EmployeeList() {
   );
 }
 
-const EmployeeCard = ({ employee, onDelete }) => (
+interface EmployeeCardProps {
+  employee: Employee;
+  onDelete: (id: number) => void;
+}
+
+const EmployeeCard = ({ employee, onDelete }: EmployeeCardProps) => (
   <Paper key={employee.id} elevation={3} sx={styles.paper}>
     <EmployeeAvatar employee={employee} styles={styles} />
     <Box flexGrow={1} display="flex" flexDirection="column" gap={1}>
@@ -68,7 +74,7 @@ const EmployeeCard = ({ employee, onDelete }) => (
         {employee.firstName} {employee.lastName}
       </Typography>
       <Typography variant="body2" color="textSecondary" noWrap>
-        ({employee.Department ? employee.Department.name : ""})
+        ({employee.Department?.name || ""})
       </Typography>
       <Typography variant="body1" color="textPrimary">
         Hire Date:
@@ -92,7 +98,7 @@ const EmployeeCard = ({ employee, onDelete }) => (
         color="error"
         startIcon={<DeleteIcon />}
         onClick={() => onDelete(employee.id)}
-        sx={styles.deleteButton}
+        sx={{"&:hover": styles.deleteButtonPseudo}}
       >
         Delete
       </Button>
@@ -116,13 +122,13 @@ const SkeletonEmployeeCard = () => (
   </Paper>
 );
 
-const styles = {
+const styles: Record<string, React.CSSProperties> = {
   buttonInactive: {
     marginTop: -3,
-    "&.Mui-disabled": {
-      backgroundColor: "#d32f2f",
-      color: "white",
-    },
+  },
+  buttonInactivePseudo: {
+    backgroundColor: "#d32f2f",
+    color: "white",
   },
   paper: {
     display: "flex",
@@ -138,10 +144,8 @@ const styles = {
     border: "2px solid",
     borderColor: "primary.main",
   },
-  deleteButton: {
-    "&:hover": {
-      backgroundColor: "error.dark",
-    },
+  deleteButtonPseudo: {
+    backgroundColor: "error.dark",
   },
 };
 
