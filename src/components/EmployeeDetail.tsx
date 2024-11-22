@@ -9,19 +9,28 @@ import {
   Typography,
   Paper,
   Skeleton,
+  SelectChangeEvent,
 } from "@mui/material";
 import EmployeeAvatar from "./EmployeeAvatar";
+import { Department, Employee } from "../types";
+
+interface EmployeeDetailProps {
+  employee: Employee | null;
+  departments: Department[];
+  handleUpdateDepartment: (newDepartmentId: number) => void;
+  handleToggleActive: (isActive: boolean) => void;
+}
 
 const EmployeeDetail = ({
   employee,
   departments,
   handleUpdateDepartment,
   handleToggleActive,
-}) => {
-  const [newDepartmentId, setNewDepartmentId] = useState(1);
+}: EmployeeDetailProps): JSX.Element => {
+  const [newDepartmentId, setNewDepartmentId] = useState<number>(1);
 
-  const handleChangeDepartment = (id) => {
-    setNewDepartmentId(id);
+  const handleChangeDepartment = (e: SelectChangeEvent<number>) => {
+    setNewDepartmentId(Number(e.target.value));
   };
 
   useEffect(() => {
@@ -90,7 +99,7 @@ const EmployeeDetail = ({
             value={newDepartmentId}
             size="small"
             sx={styles.select}
-            onChange={(e) => handleChangeDepartment(e.target.value)}
+            onChange={handleChangeDepartment}
           >
             {departments.map((department) => (
               <MenuItem key={department.id} value={department.id}>
@@ -112,7 +121,12 @@ const EmployeeDetail = ({
   );
 };
 
-const InfoRow = ({ label, value }) => (
+interface InfoRowProps {
+  label: string;
+  value?: string | number;
+}
+
+const InfoRow = ({ label, value }: InfoRowProps) => (
   <Box
     display="flex"
     flexDirection="row"
@@ -128,7 +142,7 @@ const InfoRow = ({ label, value }) => (
       {label}:
     </Typography>
     <Typography variant="body2" color="textSecondary">
-      {value}
+      {value || ""}
     </Typography>
   </Box>
 );
@@ -155,13 +169,13 @@ const SkeletonEmployeeDetail = () => (
   </Paper>
 );
 
-const styles = {
+const styles: Record<string, React.CSSProperties> = {
   buttonInactive: {
     marginTop: -3,
-    "&.Mui-disabled": {
-      backgroundColor: "#d32f2f",
-      color: "white",
-    },
+  },
+  buttonInactivePseudo: {
+    backgroundColor: "#d32f2f",
+    color: "white",
   },
   toggleActiveButton: {
     marginTop: 1,
