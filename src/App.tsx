@@ -9,7 +9,7 @@ import NavBar from "./components/NavBar";
 import { ErrorProvider } from "./context/ErrorContext";
 import ErrorMessage from "./components/ErrorMessage";
 
-function App() {
+const App = (): JSX.Element => {
   const { theme, isDarkMode, handleThemeSwitch } = useThemeToggle();
 
   return (
@@ -43,6 +43,6 @@ function App() {
       </ThemeProvider>
     </ErrorProvider>
   );
-}
+};
 
 export default App;
