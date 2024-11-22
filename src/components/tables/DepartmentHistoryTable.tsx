@@ -12,8 +12,15 @@ import {
   Skeleton,
 } from "@mui/material";
 import { getDate } from "../../utils";
+import { DepartmentHistory } from "../../types";
 
-const DepartmentHistoryTable = ({ departmentHistory }) => {
+interface DepartmentHistoryTableProps {
+  departmentHistory: DepartmentHistory[];
+}
+
+const DepartmentHistoryTable = ({
+  departmentHistory,
+}: DepartmentHistoryTableProps): JSX.Element => {
   if (!departmentHistory.length) {
     return <DepartmentHistorySkeleton />;
   }
@@ -35,12 +42,10 @@ const DepartmentHistoryTable = ({ departmentHistory }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {departmentHistory.map((history, index) => (
-                <TableRow key={index}>
+              {departmentHistory.map((history: DepartmentHistory) => (
+                <TableRow key={history.id}>
                   <TableCell>{getDate(history.date)}</TableCell>
-                  <TableCell>
-                    {history.Department ? history.Department.name : ""}
-                  </TableCell>
+                  <TableCell>{history.Department?.name || ""}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -87,10 +92,10 @@ const DepartmentHistorySkeleton = () => {
   );
 };
 
-const styles = {
-  container: { mt: 3, p: 2, borderRadius: 2 },
+const styles: Record<string, React.CSSProperties> = {
+  container: { marginTop: 3, padding: 2, borderRadius: 2 },
   titleBox: {
-    mb: 2,
+    marginBottom: 2,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
