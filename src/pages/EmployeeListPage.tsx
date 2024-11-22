@@ -1,8 +1,7 @@
-import React from "react";
 import { Box, Container, Typography } from "@mui/material";
 import EmployeeList from "../components/EmployeeList";
 
-const EmployeeListPage = () => {
+const EmployeeListPage = (): JSX.Element => {
   return (
     <Container maxWidth="md" sx={{ paddingY: 4 }}>
       <Box mb={3}>
