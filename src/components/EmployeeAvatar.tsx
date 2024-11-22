@@ -1,7 +1,13 @@
 import { Avatar, Box, Button } from "@mui/material";
 import { getImageUrl } from "../api";
+import { Employee } from "../types";
 
-const EmployeeAvatar = ({ employee, styles }) => {
+interface EmployeeAvatarProps {
+  employee: Employee;
+  styles: Record<string, React.CSSProperties>;
+}
+
+const EmployeeAvatar = ({ employee, styles }: EmployeeAvatarProps): JSX.Element => {
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
       <Avatar
@@ -13,7 +19,10 @@ const EmployeeAvatar = ({ employee, styles }) => {
         <Button
           variant="contained"
           size="small"
-          sx={styles.buttonInactive}
+          sx={{
+            ...styles.buttonInactive,
+            "&.Mui-disabled": styles.buttonInactivePseudo,
+          }}
           disabled
         >
           Inactive
