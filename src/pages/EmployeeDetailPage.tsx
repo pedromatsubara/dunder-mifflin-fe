@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import EmployeeDetail from "../components/EmployeeDetail";
 import DepartmentHistoryTable from "../components/tables/DepartmentHistoryTable";
 import { useParams } from "react-router-dom";
@@ -59,13 +59,16 @@ const EmployeeDetailPage = (): JSX.Element => {
 
   const handleUpdateDepartment = useCallback(
     async (newDepartmentId: number) => {
+      if (!id) return;
+  
       try {
-        const employeeData = await updateEmployee(id, {
-          departmentId: newDepartmentId,
-        });
-
+        const updatedEmployee: Partial<Employee> = { 
+          departmentId: newDepartmentId 
+        };
+  
+        const employeeData = await updateEmployee(id, updatedEmployee);
         const historyData = await getDepartmentHistoryData(id);
-
+  
         setEmployee(employeeData);
         setDepartmentHistory(historyData);
       } catch (error) {
@@ -77,10 +80,13 @@ const EmployeeDetailPage = (): JSX.Element => {
 
   const handleToggleActive = useCallback(
     async (employeeActive: boolean) => {
+      if (!id) return;
+  
       try {
-        const employeeData = await updateEmployee(id, {
-          active: employeeActive,
-        });
+        const updatedEmployee: Partial<Employee> = { 
+          active: employeeActive 
+        };
+        const employeeData = await updateEmployee(id, updatedEmployee);
         setEmployee(employeeData);
       } catch (error) {
         showError("Failed to update employee status.");
