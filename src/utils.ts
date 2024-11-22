@@ -5,7 +5,7 @@ import {
   differenceInDays,
 } from "date-fns";
 
-export const getDateDifference = (date) => {
+export const getDateDifference = (date: string): string => {
   if (!date) {
     return "";
   }
@@ -19,7 +19,7 @@ export const getDateDifference = (date) => {
   return differenceString;
 };
 
-export const getDate = (date) => {
+export const getDate = (date: string): string => {
   if (!date) {
     return "";
   }
