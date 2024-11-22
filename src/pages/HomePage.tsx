@@ -1,9 +1,9 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const HomePage = () => {
+const HomePage = (): JSX.Element => {
   return (
-    <Container maxWidth="md" sx={{ paddingY: 4 }}>
+    <Container maxWidth="md" sx={{ py: 4 }}>
       <Box mb={3}>
         <Typography variant="h4" textAlign="center">
           Welcome to Dunder Mifflin Management App
@@ -33,7 +33,7 @@ const HomePage = () => {
   );
 };
 
-const styles = {
+const styles: Record<string, React.CSSProperties> = {
   largeBtn: {
     fontSize: "1.5rem",
     padding: "16px 32px",
