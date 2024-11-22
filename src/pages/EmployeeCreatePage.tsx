@@ -9,9 +9,9 @@ const EmployeeCreatePage = (): JSX.Element => {
   const [departments, setDepartments] = useState<Department[]>([]);
   const { showError } = useError();
 
-  const fetchDepartments = useCallback(async (): Promise<void> => {
+  const fetchDepartments = useCallback(async () => {
     try {
-      const departmentsData: Department[] = await getDepartments();
+      const departmentsData = await getDepartments();
       setDepartments(departmentsData);
     } catch (error) {
       showError("Failed to fetch departments.");

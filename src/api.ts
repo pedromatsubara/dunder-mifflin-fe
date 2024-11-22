@@ -56,7 +56,7 @@ export const getEmployeeById = async (id: string): Promise<Employee> => {
   }
 };
 
-export const createEmployee = async (employee: Employee): Promise<Employee> => {
+export const createEmployee = async (employee: FormData): Promise<Employee> => {
   try {
     const response = await api.post(`/employees/`, employee);
     return response.data;

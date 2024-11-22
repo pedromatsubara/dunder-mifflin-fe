@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { createEmployee } from "../api";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,40 +12,49 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useError } from "../context/ErrorContext";
+import { Department, Employee } from "../types";
 
-const EmployeeCreate = ({ departments }) => {
-  const [employee, setEmployee] = useState({
+interface EmployeeCreateProps {
+  departments: Department[];
+}
+
+const EmployeeCreate = ({ departments }: EmployeeCreateProps): JSX.Element => {
+  const [employee, setEmployee] = useState<Partial<Employee>>({
     firstName: "",
     lastName: "",
-    departmentId: "",
     phone: "",
     address: "",
   });
-  const [image, setImage] = useState(null);
-  const [loadingCreate, setLoadingCreate] = useState(false);
+  const [image, setImage] = useState<File | null>(null);
+  const [loadingCreate, setLoadingCreate] = useState<boolean>(false);
   const navigate = useNavigate();
   const { showError } = useError();
 
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setImage(e.target.files[0]);
+    }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setEmployee({ ...employee, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoadingCreate(true);
+  
     const data = new FormData();
+  
     for (const key in employee) {
-      data.append(key, employee[key]);
+      data.append(key, String(employee[key as keyof Employee]));
     }
+  
     if (image) {
       data.append("image", image);
     }
-
+  
     try {
       const employeeData = await createEmployee(data);
       navigate(`/employees/${employeeData.id}`);
@@ -80,12 +89,12 @@ const EmployeeCreate = ({ departments }) => {
             name="departmentId"
             label="Department"
             fullWidth
-            value={employee.departmentId}
+            value={employee.departmentId || ""}
             onChange={handleChange}
             select
             required
           >
-            {departments.lenght ? (
+            {!departments.length ? (
               <MenuItem key="loading" disabled>
                 Loading departments...
               </MenuItem>
@@ -139,7 +148,7 @@ const EmployeeCreate = ({ departments }) => {
   );
 };
 
-const styles = {
+const styles: Record<string, React.CSSProperties> = {
   paper: {
     padding: 4,
     marginTop: 3,
