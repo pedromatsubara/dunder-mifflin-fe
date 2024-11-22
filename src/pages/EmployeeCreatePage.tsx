@@ -3,14 +3,15 @@ import EmployeeCreate from "../components/EmployeeCreate";
 import { getDepartments } from "../api";
 import { Container, Box, Typography } from "@mui/material";
 import { useError } from "../context/ErrorContext";
+import { Department } from "../types";
 
-const EmployeeCreatePage = () => {
-  const [departments, setDepartments] = useState([]);
+const EmployeeCreatePage = (): JSX.Element => {
+  const [departments, setDepartments] = useState<Department[]>([]);
   const { showError } = useError();
 
-  const fetchDepartments = useCallback(async () => {
+  const fetchDepartments = useCallback(async (): Promise<void> => {
     try {
-      const departmentsData = await getDepartments();
+      const departmentsData: Department[] = await getDepartments();
       setDepartments(departmentsData);
     } catch (error) {
       showError("Failed to fetch departments.");
