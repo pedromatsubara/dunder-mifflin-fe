@@ -1,8 +1,10 @@
 import { createContext, useContext, useState, useCallback, ReactNode } from "react";
-import { Snackbar, Alert } from "@mui/material";
 
 interface ErrorContextType {
+  errorMessage: string;
+  open: boolean;
   showError: (message: string) => void;
+  handleClose: () => void;
 }
 
 interface ErrorProviderProps {
@@ -25,13 +27,8 @@ export const ErrorProvider = ({ children }: ErrorProviderProps) => {
   }, []);
 
   return (
-    <ErrorContext.Provider value={{ showError }}>
+    <ErrorContext.Provider value={{ errorMessage, open, showError, handleClose }}>
       {children}
-      <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          {errorMessage}
-        </Alert>
-      </Snackbar>
     </ErrorContext.Provider>
   );
 };
@@ -42,4 +39,4 @@ export const useError = (): ErrorContextType => {
     throw new Error("useError must be used within an ErrorProvider");
   }
   return context;
-}
+};
